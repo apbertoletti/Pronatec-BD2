@@ -1,27 +1,25 @@
 -- 1) Seleciona todas as colunas de todas as lojas
 SELECT * FROM Loja
 
-
 -- 2) Seleciona todas as colunas dos clientes femininos
 SELECT * FROM Cliente WHERE Sexo = 'F'
-
 
 -- 3) Seleciona todas as colunas de todas as categorias
 SELECT * FROM Categoria
 
-
 -- 4) Seleciona a descrição e o valor de todos os produtos
 SELECT Descricao, Valor FROM Produto
 
-
 -- 5) Seleciona somente os produtos da categoria camiseta
+-----> 5.1) Primeiro, encontra qual é o ID da categoria desejada (camiseta)
+SELECT * FROM Categoria
+-----> 5.2) Depois, faz a seleção filtrando pelo ID desta categoria
 SELECT 
 	* 
 FROM 
 	Produto 
 WHERE 
 	IDCategoria = 2
-
 
 -- 6) Seleciona todas as colunas somente dos produtos mais 
 -- caros do que 100 
@@ -32,9 +30,12 @@ FROM
 WHERE 	
 	Valor > 100 
 	
-	
+
 -- 7) Seleciona todas as colunas somente dos produtos mais 
 -- caros do que 100 e da categoria "Equipamento musculação" 
+-----> 7.1) Primeiro, encontra qual é o ID da categoria desejada 
+SELECT * FROM Categoria
+-----> 7.2) Depois, faz a seleção filtrando pelo ID desta categoria
 SELECT 
 	* 
 FROM 	
@@ -59,7 +60,6 @@ UPDATE Produto SET Valor = Valor * 1.30 WHERE IDCategoria = 2
 -- arredondando para 0 (zero) casas decimais
 ----- CUIDADO!!! NÃO ESQUEÇA DE SELECIONAR A CLAUSULA O WHERE
 UPDATE Produto SET Valor = ROUND(Valor * 1.30, 0) WHERE IDCategoria = 2
-
 
 
 -- 13) acrescentar uma nova categoria chamada "Calçados"
@@ -143,8 +143,6 @@ FROM
     Produto
 WHERE
     Descricao LIKE 'Meia%'
-    
-
 
 -- 19) Trazer todas as colunas dos produtos 
 -- que custam entre 200 e 300 reais
@@ -156,15 +154,16 @@ WHERE
     Valor BETWEEN 200 AND 300
 
 
--- 20) Selecionar todas as colunas somente dos 2 primeiros clientes
+-- 20) Selecionar todas as colunas somente 
+-- dos 2 primeiros clientes
 SELECT TOP 2 * FROM Cliente
 
+-- 21) Selecionar o CPF, Nome e Sexo 
+-- dos 3 primeiros clientes
+SELECT TOP 2 CPF, Nome, Sexo FROM Cliente 
 
--- 21) Selecionar o CPF, Nome e Sexo dos 3 primeiros clientes
-SELECT TOP 2 CPF, Nome e Sexo FROM Cliente 
-
-
--- 22) Selecionar o CPF, Nome e Sexo dos 3 ultimos clientes ordernados pelo nome
+-- 22) Selecionar o CPF, Nome e Sexo dos 3 
+--ultimos clientes ordernados pelo nome
 SELECT TOP 3 CPF, Nome, Sexo 
 FROM Cliente 
 ORDER BY Nome DESC
@@ -181,18 +180,25 @@ SELECT COUNT(*) FROM Cliente WHERE Sexo = 'F'
 SELECT SUM(Valor) FROM Produto
 
 -- 26) Selecione o valor total dos produtos da categoria Meia
--- Primeiro encontra qual é o ID da categoria desejada (meias)
+-----> 26.1) Primeiro encontra qual é o ID da categoria desejada (meias)
 SELECT * FROM Categoria
 
--- Faz a seleção filtrando pelo ID desta categoria
+-----> 26.2) Faz a seleção filtrando pelo ID desta categoria
 SELECT SUM(Valor) FROM Produto WHERE IDCategoria = 5
 
 
 -- 30) Selecionar a media de valores dos produtos
---Sem arrendodamento
+----->Sem arrendodamento
 SELECT AVG(Valor) FROM Produto 
---Com arredondamento
+----->Com arredondamento
 SELECT ROUND(AVG(Valor), 2) FROM Produto 
 
+-- 31) Selecione o valor médito dos produtos da categoria Meia,
+-- arredondando o resultado para 2 casas decimais
+-----> 31.1) Primeiro encontra qual é o ID da categoria desejada (meias)
+SELECT * FROM Categoria
+
+-----> 31.2) Faz a seleção filtrando pelo ID desta categoria
+SELECT ROUND(AVG(Valor), 2) FROM Produto WHERE IDCategoria = 5
 
 
