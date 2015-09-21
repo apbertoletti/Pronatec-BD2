@@ -1,3 +1,12 @@
+/*************************************************************
+* PRONATEC/UNIMEP 
+* CURSO: Técnico em Informática para Internet
+* PROFESSOR: André Bertoletti (apbertolet@unimep.br)
+* DISPCIPLINA: Banco de Dados II 
+* SCRIPT: Inserção dos dados de exemplo
+**************************************************************/
+
+
 -- Inserindo dados na tabela de Lojas
 INSERT INTO Loja VALUES ('12345678912345', 'Shopping Central', '3544-1145')
 INSERT INTO Loja VALUES ('01234568874512', 'Mercadinho', '3524-1145')

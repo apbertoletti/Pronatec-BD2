@@ -1,3 +1,11 @@
+/*************************************************************
+* PRONATEC/UNIMEP 
+* CURSO: Técnico em Informática para Internet
+* PROFESSOR: André Bertoletti (apbertolet@unimep.br)
+* DISPCIPLINA: Banco de Dados II 
+* SCRIPT: Exemplos dos comandos SQL
+**************************************************************/
+
 -- 1) Seleciona todas as colunas de todas as lojas
 SELECT * FROM Loja
 

@@ -1,3 +1,11 @@
+/*************************************************************
+* PRONATEC/UNIMEP 
+* CURSO: Técnico em Informática para Internet
+* PROFESSOR: André Bertoletti (apbertolet@unimep.br)
+* DISPCIPLINA: Banco de Dados II 
+* SCRIPT: Criação do banco de dados e estrutura das tabelas 
+**************************************************************/
+
 --Criando o banco de dados
 CREATE DATABASE BDLoja
 
