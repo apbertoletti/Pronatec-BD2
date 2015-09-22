@@ -210,3 +210,56 @@ SELECT * FROM Categoria
 SELECT ROUND(AVG(Valor), 2) FROM Produto WHERE IDCategoria = 5
 
 
+-- 32) Traz somente a coluna sexo removendo as duplicadas
+-----> 32.1) Trazendo somente a coluna sexo de todos os registros
+SELECT Sexo FROM Cliente
+-----> 32.2) Trazendo somente a coluna sexo de todos os registros,
+-----  porém, removendo as duplicadas.
+SELECT DISTINCT Sexo FROM Cliente
+
+-- 33) Traz somente as 5 primeiras letras do nome e a coluna sexo 
+-- removendo as duplicadas
+SELECT DISTINCT SUBSTRING(Nome, 1, 5), Sexo FROM Cliente
+
+
+-- 34) Agupar os sexos iguais dos clientes
+SELECT
+	Sexo
+FROM 
+	Cliente
+GROUP BY
+	Sexo
+
+	
+-- 35) Agupar os sexos iguais dos clientes,
+-- mostrando quantos registros tem de cada um
+SELECT
+	Sexo, COUNT(*)
+FROM 
+	Cliente
+GROUP BY
+	Sexo
+
+
+-- 36) Agrupar as categorias iguais dos produtos 
+-----> 36.1) Verificando antes como estão os registros da tabela produto
+SELECT * FROM Produto
+
+
+-----> 36.2) Agrupando as categorias iguais dos produtos
+SELECT IDCategoria FROM Produto GROUP BY IDCategoria	
+
+
+-- 37) Agrupando as categorias iguais dos produtos e contando cada uma delas
+SELECT IDCategoria, COUNT(*) FROM Produto GROUP BY IDCategoria	
+
+
+-- 38) Agrupando as categorias iguais dos produtos, contando e somando cada uma delas
+SELECT 
+	IDCategoria, 
+	COUNT(*) AS 'Contagem', 
+	SUM(Valor) AS 'Total'
+ FROM 
+	Produto 
+ GROUP BY 
+	IDCategoria	
