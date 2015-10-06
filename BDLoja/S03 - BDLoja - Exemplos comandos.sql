@@ -6,6 +6,10 @@
 * SCRIPT: Exemplos dos comandos SQL
 **************************************************************/
 
+/***************************************************************************************
+* AULA 3: Seleção de registros (SELECT), Atualização de registro (UPDATE), Deleção de registros (DELETE)
+***************************************************************************************/
+
 -- 1) Seleciona todas as colunas de todas as lojas
 SELECT * FROM Loja
 
@@ -109,12 +113,14 @@ SELECT * FROM Produto
 -----> CUIDADO!!! Não esquecer de selecionar a clausula WHERE
 DELETE FROM Categoria WHERE ID = 1
 
--- 15) Excluindo todos os produtos mais caros do que 500
+-- 14.1) Excluindo todos os produtos mais caros do que 500
 -----> CUIDADO!!! Não esquecer de selecionar a clausula WHERE
 DELETE FROM Produto WHERE Valor > 500
 
 
-
+/***************************************************************************************
+* AULA 4: Ordenação (ORDER BY), Busca aproximada (LIKE) e Busca de intervalos (BETWEEN)
+***************************************************************************************/
 
 -- 15) Ordernar por nome de cliente
 SELECT 
@@ -161,6 +167,10 @@ FROM
 WHERE
     Valor BETWEEN 200 AND 300
 
+
+/***************************************************************************************
+* AULA 5: Soma (SUM), Média (AVG), Contagem (COUNT) e Limitação de registro (TOP)
+****************************************************************************************/
 
 -- 20) Selecionar todas as colunas somente 
 -- dos 2 primeiros clientes
@@ -209,6 +219,10 @@ SELECT * FROM Categoria
 -----> 31.2) Faz a seleção filtrando pelo ID desta categoria
 SELECT ROUND(AVG(Valor), 2) FROM Produto WHERE IDCategoria = 5
 
+
+/***************************************************************************************
+* AULA 6: Distinct e Group By
+****************************************************************************************/
 
 -- 32) Traz somente a coluna sexo removendo as duplicadas
 -----> 32.1) Trazendo somente a coluna sexo de todos os registros
@@ -263,3 +277,65 @@ SELECT
 	Produto 
  GROUP BY 
 	IDCategoria	
+
+/***************************************************************************************
+* AULA 7: Apresentação dos exercícios práticos de cada aluno
+****************************************************************************************/
+
+
+/***************************************************************************************
+* AULA 8: Sub-consultas (sub-querys)
+****************************************************************************************/
+
+-- 39) Trazer todas as colunas dos produtos da categoria meia, 
+-- através de sub-query
+SELECT * FROM Produto WHERE IDCategoria = (SELECT ID FROM Categoria WHERE Nome = 'Meias')
+
+
+-- 40) Trazer todas as colunas dos produtos das categorias que
+-- podem vestir os pés, através de sub-query
+SELECT 
+	* 
+FROM 
+	Produto
+WHERE 
+	IDCategoria IN (SELECT ID FROM Categoria WHERE Nome = 'Tenis' OR Nome = 'Meias')
+
+	
+-- 41) Trazer todas as colunas dos produtos das categorias que
+-- NÃO podem vestir os pés, através de sub-query
+SELECT 
+	* 
+FROM 
+	Produto
+WHERE 
+	IDCategoria NOT IN (SELECT ID FROM Categoria WHERE Nome = 'Tenis' OR Nome = 'Meias')
+
+
+-- 42) Trazer todas as colunas dos produtos e também uma coluna a 
+-- mais que mostre o total de vendas realizadas de cada produto,
+-- através de sub-query
+SELECT 
+	ID,
+	Descricao,
+	(SELECT 
+		SUM(ValorTotal) 
+	 FROM 
+		VendaProduto 
+	 WHERE 
+		IDProduto = Produto.ID) AS ValorTotal,
+	 IDCategoria
+FROM
+	Produto
+
+	
+-- 43) Trazer todas as colunas dos produtos, uma coluna que mostre 
+-- o total de vendas realizadas de cada produto e também uma outra
+-- que mostre o nome da categoria a qual pertence
+SELECT 
+	ID, -- Primeira coluna (ID)
+	Descricao, -- Segunda coluna (Descricao)
+	(SELECT SUM(ValorTotal) FROM VendaProduto WHERE IDProduto = Produto.ID) AS ValorTotal, -- Terceira coluna (ValorTotal)
+	(SELECT Nome FROM Categoria WHERE ID = Produto.IDCategoria) AS NomeCategoria -- Quarta coluna (NomeCategoria)
+FROM 
+	Produto
