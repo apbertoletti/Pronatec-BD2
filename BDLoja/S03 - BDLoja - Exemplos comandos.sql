@@ -289,7 +289,7 @@ SELECT
 
 -- 39) Trazer todas as colunas dos produtos da categoria meia, 
 -- através de sub-query
-SELECT * FROM Produto WHERE IDCategoria = (SELECT ID FROM Categoria WHERE Nome = 'Meias')
+SELECT * FROM Produto WHERE IDCategoria IN (SELECT ID FROM Categoria WHERE Nome = 'Meias')
 
 
 -- 40) Trazer todas as colunas dos produtos das categorias que
@@ -323,10 +323,10 @@ SELECT
 	 FROM 
 		VendaProduto 
 	 WHERE 
-		IDProduto = Produto.ID) AS ValorTotal,
-	 IDCategoria
+		IDProduto = Produto.ID) AS ValorTotal
 FROM
 	Produto
+
 
 	
 -- 43) Trazer todas as colunas dos produtos, uma coluna que mostre 
