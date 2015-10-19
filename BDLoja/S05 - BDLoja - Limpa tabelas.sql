@@ -19,16 +19,22 @@ DELETE FROM Cliente
 DELETE FROM Produto
 
 --5) Exclui todos os registros da tabel a Loja 
-DELETE FROM Loja
+DELETE FROM Estabelecimento
 
 --6) Exclui todos os registros da tabel a Categoria 
 DELETE FROM Categoria
 
+--6) Exclui todos os registros da tabel a Marca
+DELETE FROM Marca
+
+--6) Exclui todos os registros da tabel a Grupo de clientes
+DELETE FROM GrupoCliente
 
 -- Scripts para zerar novamente os campos de Autoincremento
 DBCC CHECKIDENT ('Cliente', RESEED, 0)
 DBCC CHECKIDENT ('Produto', RESEED, 0)
 DBCC CHECKIDENT ('Categoria', RESEED, 0)
+DBCC CHECKIDENT ('Marca', RESEED, 0)
 DBCC CHECKIDENT ('VendaProduto', RESEED, 0)
 DBCC CHECKIDENT ('Venda', RESEED, 0)
 
