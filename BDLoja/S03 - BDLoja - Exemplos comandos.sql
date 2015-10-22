@@ -312,7 +312,17 @@ WHERE
 	IDCategoria NOT IN (SELECT ID FROM Categoria WHERE Nome = 'Tenis' OR Nome = 'Meias')
 
 
--- 42) Trazer todas as colunas dos produtos e também uma coluna a 
+-- 42) Trazer todas as colunas dos produtos, e também uma outra
+-- que mostre o nome da categoria a qual pertence
+SELECT 
+	ID, -- Primeira coluna (ID)
+	Descricao, -- Segunda coluna (Descricao)
+	(SELECT Nome FROM Categoria WHERE ID = Produto.IDCategoria) AS NomeCategoria -- Terceira coluna (NomeCategoria)
+FROM 
+	Produto
+	
+	
+-- 43) Trazer todas as colunas dos produtos e também uma coluna a 
 -- mais que mostre o total de vendas realizadas de cada produto,
 -- através de sub-query
 SELECT 
@@ -327,9 +337,8 @@ SELECT
 FROM
 	Produto
 
-
 	
--- 43) Trazer todas as colunas dos produtos, uma coluna que mostre 
+-- 44) Trazer todas as colunas dos produtos, uma coluna que mostre 
 -- o total de vendas realizadas de cada produto e também uma outra
 -- que mostre o nome da categoria a qual pertence
 SELECT 
@@ -339,3 +348,107 @@ SELECT
 	(SELECT Nome FROM Categoria WHERE ID = Produto.IDCategoria) AS NomeCategoria -- Quarta coluna (NomeCategoria)
 FROM 
 	Produto
+
+
+/******************************************************************************************************************
+* AULA 9: Junção de tabelas, através de duas técnicas com sintaxes diferentes mas resultados iguais: WHERE e JOIN
+*******************************************************************************************************************/
+
+/*********** Exemplos utilizando junção de tabelas com WHERE **********************/
+/*********** Esta é uma ténica mais antiga e pouco utilizada hoje em dia **********/
+
+-- 45) Mostrando o ID e Descrição do produto e também o nome de sua categoria
+-- O resultado é o mesmo da sub-query do exemplo nº42, 
+-- porém agora usando a técnica da junção de tabelas, cuja execução é bem mais rápida
+SELECT 
+	Produto.ID,
+	Produto.Descricao,	
+	Categoria.Nome AS NomeCategioria
+FROM
+	Produto, Categoria
+WHERE
+    Produto.IDCategoria = Categoria.ID
+    
+
+-- 46) Mostrando o CPF, Nome, Email e o nome do Grupo a qual o cliente faz parte.
+SELECT 
+	Cliente.CPF,
+	Cliente.Nome,
+	Cliente.Email,
+	GrupoCliente.Descricao
+FROM
+	Cliente, GrupoCliente
+WHERE
+	Cliente.SiglaGrupo = GrupoCliente.Sigla	
+
+--47) Mostrando a descrição, valor, nome da categoria e nome da marca de todos os produtos.
+SELECT 
+	Produto.Descricao,
+	Produto.Valor,
+	Categoria.Nome,
+	Marca.Nome
+FROM
+	Produto, Categoria, Marca
+WHERE
+    Produto.IDCategoria = Categoria.ID AND
+    Produto.IDMarca = Marca.ID
+    
+    
+-- 48) Mostrando a descrição do produto, nome de sua categoria, valor e nome da sua marca.
+-- Nesta query é exemplificado o uso da clausula 'AS' a fim de apelidar colunas e tabelas, 
+-- passando a valer estes apeldidos no SELECT e no WHERE
+SELECT 
+	prod.Descricao AS [Nome do Produto],
+	c.Nome AS [Nome da Categoria],
+	prod.Valor,
+	m.Nome AS [Nome da Marca]
+FROM
+	Produto AS prod, Categoria AS c, Marca as m
+WHERE
+	c.ID = prod.IDCategoria AND
+	m.ID = prod.IDMarca
+
+/*********** Exemplos utilizando junção de tabelas com JOIN **********************/
+/*********** Esta é uma ténica mais recente e mais recomendada para uso **********/
+/*********** Dê preferência para utilizar esta segunda técnica, pois o código fica mais limpo **********/
+    
+--49) Resolvendo a mesmo junção do exemplo nº 45, porém agora com INNER JOIN
+SELECT     
+	Produto.ID, 
+	Produto.Descricao, 
+	Categoria.Nome AS NomeCategioria
+FROM         
+	Produto 
+	INNER JOIN Categoria ON Produto.IDCategoria = Categoria.ID
+    
+--50) Resolvendo a mesmo junção do exemplo nº 46, porém agora com INNER JOIN
+SELECT     
+	Cliente.CPF, 
+	Cliente.Nome, 
+	Cliente.Email, 
+	GrupoCliente.Descricao
+FROM         
+	Cliente 
+	INNER JOIN GrupoCliente ON Cliente.SiglaGrupo = GrupoCliente.Sigla
+	
+--51) Resolvendo a mesmo junção do exemplo nº 47, porém agora com INNER JOIN	    
+SELECT     
+	Produto.Descricao, 
+	Produto.Valor, 
+	Categoria.Nome, 
+	Marca.Nome 
+FROM         
+	Produto 
+	INNER JOIN Categoria ON Produto.IDCategoria = Categoria.ID 
+	INNER JOIN Marca ON Produto.IDMarca = Marca.ID
+
+--52) Resolvendo a mesmo junção do exemplo nº 48, porém agora com INNER JOIN	    
+SELECT     
+	prod.Descricao AS [Nome do Produto], 
+	c.Nome AS [Nome da Categoria], 
+	prod.Valor, 
+	m.Nome AS [Nome da Marca]
+FROM 
+    Produto AS prod 
+    INNER JOIN Categoria AS c ON prod.IDCategoria = c.ID 
+    INNER JOIN Marca AS M ON prod.IDMarca = M.ID

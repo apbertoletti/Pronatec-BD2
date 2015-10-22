@@ -113,5 +113,54 @@ WHERE
 
 
 /****************************************************/
-/************** EXERCÍCOS - Aula 6 ******************/
+/************** EXERCÍCOS - Aula 9 ******************/
 /****************************************************/
+
+--E12) Mostar a Descrição, Valor, ID da Marca e Nome da Marca de todos produtos 
+SELECT     
+	Produto.Descricao, 
+	Produto.Valor, 
+	Produto.IDMarca, 
+	Marca.Nome
+FROM         
+	Produto 
+	INNER JOIN Marca ON Produto.IDMarca = Marca.ID
+
+--E13) Mostrar a Descrição, Valor e Nome da Categoria de todos os produtos ordenados por valor, do mais caro para o mais barato
+SELECT     
+	Produto.Descricao, 
+	Produto.Valor, 
+	Categoria.Nome
+FROM         
+	Produto 
+	INNER JOIN Categoria ON Produto.IDCategoria = Categoria.ID
+ORDER BY 
+	Produto.Valor DESC
+		
+--E14) Mostrar a Descrição, Valor, ID da categoria, Nome da categoria, ID da marca, Nome da marca e todos produtos que custam entre 100 e 300 reais
+SELECT     
+	Produto.Descricao, 
+	Produto.Valor,
+	Produto.IDCategoria, 
+	Categoria.Nome AS [Nome da Categoria], 
+	Produto.IDMarca, 
+	Marca.Nome AS [Nome da Marca]
+FROM
+	Produto 
+	INNER JOIN Marca ON Produto.IDMarca = Marca.ID 
+	INNER JOIN Categoria ON Produto.IDCategoria = Categoria.ID
+WHERE 
+	Produto.Valor BETWEEN 100 AND 300
+
+--E15) Mostrar o Nome, Sexo, CPF e Descrição do Grupo somente dos clientes que NÃO possuem e-mail
+SELECT     
+	Cliente.Nome, 
+	Cliente.Sexo, 
+	Cliente.CPF, 
+	GrupoCliente.Descricao
+FROM         
+	Cliente 
+	LEFT OUTER JOIN GrupoCliente ON Cliente.SiglaGrupo = GrupoCliente.Sigla
+WHERE
+	Cliente.Email IS NULL
+
