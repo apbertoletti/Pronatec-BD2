@@ -164,3 +164,118 @@ FROM
 WHERE
 	Cliente.Email IS NULL
 
+
+/****************************************************/
+/************** EXERCÍCOS - Aula 10 ******************/
+/****************************************************/
+
+--E16) Mostrar o ID, Descriçao, Valor e Nome da Marca 
+--de todos os produtos, independente se há marca definida ou não
+SELECT     
+	Produto.ID, 
+	Produto.Descricao, 
+	Produto.Valor, 
+	Marca.Nome
+FROM         
+	Produto 
+	LEFT JOIN Marca ON Produto.IDMarca = Marca.ID
+
+
+--E17) Mostrar o nome dos clientes que participaram de todas 
+--as vendas realizadas 
+SELECT     
+	Cliente.Nome
+FROM         
+	Cliente 
+	INNER JOIN Venda ON Cliente.ID = Venda.IDCliente
+
+
+--E18) Mostrar o nome do clientes e nomes dos establecimentos 
+--de todas as vendas realizadas 
+SELECT     
+	Cliente.Nome, 
+	Estabelecimento.Nome AS NomeEstabelecimento
+FROM         
+	Cliente 
+	INNER JOIN Venda ON Cliente.ID = Venda.IDCliente 
+	INNER JOIN Estabelecimento ON Venda.CNPJEstabelecimento = Estabelecimento.CNPJ
+
+
+--E19) Mostrar a Descrição, Valor, Nome da categoria e nome 
+--da marca somente dos produtos que custam entre 400 e 500. 
+--OBS: Os produtos sem marca definida também deverão estar 
+--presentes nesta consulta
+SELECT     
+	Produto.Descricao, 
+	Produto.Valor, 
+	Categoria.Nome AS NomeCategoria, 
+	Marca.Nome AS NomeMarca
+FROM         
+	Produto 
+	INNER JOIN Categoria ON Produto.IDCategoria = Categoria.ID 
+	LEFT JOIN Marca ON Produto.IDMarca = Marca.ID
+WHERE 
+	Produto.Valor BETWEEN 400 AND 500
+
+
+--E20) Mostrar o nome dos clientes que participaram de todas as vendas 
+--realizadas nas lojas no mês de janeiro de 2015. Mostrar também a data em que 
+--estas vendas foram realizadas
+SELECT     
+	Cliente.Nome, 
+	Venda.DataHora
+FROM         
+	Cliente 
+	INNER JOIN Venda ON Cliente.ID = Venda.IDCliente
+WHERE 
+	Venda.DataHora BETWEEN '20150101' AND '20150131'
+
+
+--E21) Exibir qual foi o produto com valor total mais caro vendido até agora, 
+--juntamente com sua descrição, nome do cliente que comprou este produto
+SELECT TOP 1
+	Produto.Descricao, 
+	Cliente.Nome,
+	VendaProduto.ValorTotal
+FROM         
+	Produto 
+	INNER JOIN VendaProduto ON Produto.ID = VendaProduto.IDProduto 
+	INNER JOIN Venda ON VendaProduto.IDVenda = Venda.ID 
+	INNER JOIN Cliente ON Venda.IDCliente = Cliente.ID
+ORDER BY
+	VendaProduto.ValorTotal DESC
+	
+	
+--E22) Exibir o Nome do estabelecimento, Nome do cliente, Descrição do 
+--Produto, quantidade vendida, valor unitário e valor total, 
+--somente  das vendas dos produtos utilizados nos 
+SELECT     
+	Estabelecimento.Nome AS NomeEstabelecimento, 
+	Cliente.Nome AS NomeCliente, 
+	Produto.Descricao, 
+	VendaProduto.Quantidade, 
+	VendaProduto.ValorUnitario, 
+	VendaProduto.ValorTotal
+FROM
+	VendaProduto 
+    INNER JOIN Venda ON VendaProduto.IDVenda = Venda.ID
+	INNER JOIN Produto ON VendaProduto.IDProduto = Produto.ID 
+	INNER JOIN Categoria ON Categoria.ID = Produto.IDCategoria 
+    INNER JOIN Estabelecimento ON Estabelecimento.CNPJ = Venda.CNPJEstabelecimento 
+    INNER JOIN Cliente ON Cliente.ID = Venda.IDCliente 
+WHERE
+	Categoria.Nome = 'Tenis' OR Categoria.Nome = 'Meias'
+
+
+--E23) Exibir o valor total das vendas separadas por gênero, ou seja, 
+--seja quantos os homens compraram e quanto as mulheres compraram na loja
+SELECT 
+	Cliente.Sexo,
+	SUM(VendaProduto.ValorTotal) AS TotalVendas
+FROM 
+	Cliente
+	INNER JOIN Venda ON Venda.IDCliente = Cliente.ID
+	INNER JOIN VendaProduto ON VendaProduto.IDVenda = Venda.ID
+GROUP BY 
+	Cliente.Sexo
+

@@ -50,6 +50,7 @@ INSERT INTO Marca VALUES ('Penalty')
 INSERT INTO Marca VALUES ('Iron')
 INSERT INTO Marca VALUES ('Pulma')
 INSERT INTO Marca VALUES ('Lupo')
+INSERT INTO Marca VALUES ('Reebok')
 
 -- Inserindo dados na tabel ade Produto
 INSERT INTO Produto VALUES ('Camiseta cavada', 150.00, 2, 2)
@@ -58,12 +59,14 @@ INSERT INTO Produto VALUES ('Bola de basquete', 200.00, 3, 3)
 INSERT INTO Produto VALUES ('Bola de futebol', 100.00, 3, 3)
 INSERT INTO Produto VALUES ('Meia para futebol de salão (preta)', 50.00, 5, 6)
 INSERT INTO Produto VALUES ('Meia para futebol de salão (amarela)', 50.00, 5, 6)
+INSERT INTO Produto VALUES ('Meia para futebol de salão (branca)', 30.00, 5, NULL)
 INSERT INTO Produto VALUES ('Barra para supino 1m50', 355.30, 4, 4)
 INSERT INTO Produto VALUES ('Peso 50kg para supino', 220.40, 4, 4)
 INSERT INTO Produto VALUES ('Meia para futebol de campo (branca)', 45.00, 5, 6)
 INSERT INTO Produto VALUES ('Meia para futebol de campo (verde)', 45.00, 5, 6)
 INSERT INTO Produto VALUES ('Meia para futebol de campo (azul)', 45.00, 5, 6)
 INSERT INTO Produto VALUES ('Tenis de corrida profissional', 750.00, 1, 5)
+INSERT INTO Produto VALUES ('Tenis de corrida genérico', 440.00, 1, NULL)
 
 
 -- Inserindo dados na tabel ade Venda

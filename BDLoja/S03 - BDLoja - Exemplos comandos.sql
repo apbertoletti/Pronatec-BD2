@@ -452,3 +452,50 @@ FROM
     Produto AS prod 
     INNER JOIN Categoria AS c ON prod.IDCategoria = c.ID 
     INNER JOIN Marca AS M ON prod.IDMarca = M.ID
+    
+    
+/******************************************************************************************************************
+* AULA 10: Junção de tabelas: INNER JOIN, LEFT JOIN, RIGTH JOIN e FULL JOIN
+*******************************************************************************************************************/
+
+--53) Juntando Produto e Marca através de INNER JOIN, ou seja, 
+--mostra somente os produtos que tenham a coluna marca definida 
+--na tabela relacionada de Marca
+SELECT 
+	*
+FROM
+	Produto
+	INNER JOIN Marca ON Produto.IDMarca = Marca.ID
+
+
+--54) Juntando Produto e Marca através de LEFT JOIN, ou seja, 
+--mostra todos os produtos, indpendende se possuem ou definição de marca
+--OBS: Na cláusula FROM, a tabela Produto está definida antes da tabela Marca, 
+--por isso, Produto está a esquerda (LEFT) da Marca
+SELECT 
+	*
+FROM
+	Produto
+	LEFT JOIN Marca ON Produto.IDMarca = Marca.ID
+	
+	
+--55) Juntando Produto e Marca através de RIGHT JOIN, ou seja, 
+--mostra somente os produtos que tenham a coluna marca definida 
+--na tabela relacionada de Marca, e também as Marcas que não 
+--possuem produtos relacionados a ela.
+--OBS: Na cláusula FROM, a tabela Marca está definida depois da tabela Produto, 
+--por isso, Marca está a direita (RIGHT) da Produto
+SELECT 
+	*
+FROM
+	Produto
+	RIGHT JOIN Marca ON Produto.IDMarca = Marca.ID
+
+--56) Juntando Produto e Marca através de RIGHT JOIN, ou seja, 
+-- mostra todos os registros de ambas as tabelas, havendo ou não relação entre elas
+SELECT 
+	*
+FROM
+	Produto
+	FULL JOIN Marca ON Produto.IDMarca = Marca.ID
+
