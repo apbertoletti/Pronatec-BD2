@@ -48,7 +48,32 @@ CREATE TABLE Cliente
 	SiglaGrupo CHAR(3)
 	
 	CONSTRAINT PK_Cliente PRIMARY KEY(ID)
-	CONSTRAINT FK_GrupoCliente FOREIGN KEY(SiglaGrupo) REFERENCES GrupoCliente(Sigla)
+	CONSTRAINT FK_Cliente_GrupoCliente FOREIGN KEY(SiglaGrupo) REFERENCES GrupoCliente(Sigla)
+)
+
+--Criando a tabela ClienteEmail
+CREATE TABLE ClienteEndereco
+(
+	ID INT,
+	IDCliente INT,
+	Logradouro VARCHAR(200),
+	Numero VARCHAR(10),
+	Complemento VARCHAR(100),
+	Bairro VARCHAR(100),
+	CEP CHAR(8)
+	
+	CONSTRAINT PK_ClienteEndereco PRIMARY KEY(ID),
+	CONSTRAINT FK_ClienteEndereco_Cliente FOREIGN KEY(IDCliente) REFERENCES Cliente(ID)
+)
+
+--Criando a tabela ClienteTelefone
+CREATE TABLE ClienteTelefone
+(
+	IDCliente INT,
+	Telefone VARCHAR(15)
+	
+	CONSTRAINT PK_ClienteTelefone PRIMARY KEY(IDCliente, Telefone),
+	CONSTRAINT FK_ClienteTelefone_Cliente FOREIGN KEY(IDCliente) REFERENCES Cliente(ID)
 )
 
 --Criando a tabela Marca
@@ -77,10 +102,11 @@ CREATE TABLE Produto
 	Valor NUMERIC(16,2) NOT NULL,--(14 casas inteiras e 2 decimais)
 	IDCategoria INT NOT NULL,
 	IDMarca INT NULL,
+	EstoqueAtual DECIMAL(18,3) NOT NULL
 	
 	CONSTRAINT PK_Produto PRIMARY KEY(ID),
-	CONSTRAINT FK_Categoria FOREIGN KEY(IDCategoria) REFERENCES Categoria(ID),
-	CONSTRAINT FK_Marca FOREIGN KEY(IDMarca) REFERENCES Marca(ID)
+	CONSTRAINT FK_Produto_Categoria FOREIGN KEY(IDCategoria) REFERENCES Categoria(ID),
+	CONSTRAINT FK_Produto_Marca FOREIGN KEY(IDMarca) REFERENCES Marca(ID)
 )
 
 --Criando a tabela Venda
@@ -92,8 +118,8 @@ CREATE TABLE Venda
 	DataHora SMALLDATETIME NOT NULL,
 	
 	CONSTRAINT PK_Venda PRIMARY KEY(ID),
-	CONSTRAINT FK_Cliente FOREIGN KEY(IDCliente) REFERENCES Cliente(ID),
-	CONSTRAINT FK_Estabelecimento FOREIGN KEY(CNPJEstabelecimento) REFERENCES Estabelecimento(CNPJ)
+	CONSTRAINT FK_Venda_Cliente FOREIGN KEY(IDCliente) REFERENCES Cliente(ID),
+	CONSTRAINT FK_Venda_Estabelecimento FOREIGN KEY(CNPJEstabelecimento) REFERENCES Estabelecimento(CNPJ)
 )
 
 --Criando a tabela VendaProduto
@@ -107,6 +133,21 @@ CREATE TABLE VendaProduto
 	ValorTotal NUMERIC(12, 2) NOT NULL
 	
 	CONSTRAINT PK_VendaProduto PRIMARY KEY(ID),
-	CONSTRAINT FK_Produto FOREIGN KEY(IDProduto) REFERENCES Produto(ID),
-	CONSTRAINT FK_Venda FOREIGN KEY(IDVenda) REFERENCES Venda(ID)
+	CONSTRAINT FK_VendaProduto_Produto FOREIGN KEY(IDProduto) REFERENCES Produto(ID),
+	CONSTRAINT FK_VendaProduto_Venda FOREIGN KEY(IDVenda) REFERENCES Venda(ID)
+)
+
+
+CREATE TABLE Boleto
+(
+	ID INT IDENTITY,
+	IDCliente INT NOT NULL,
+	IDVenda INT,
+	NumeroDocumento VARCHAR(10) NOT NULL,
+	Valor DECIMAL(18,2) NOT NULL,
+	Recebido BIT NOT NULL
+	 
+	CONSTRAINT PK_Boleto PRIMARY KEY(ID),
+	CONSTRAINT FK_Boleto_Cliente FOREIGN KEY(IDCliente) REFERENCES Cliente(ID),
+	CONSTRAINT FK_Boleto_Venda FOREIGN KEY(IDVenda) REFERENCES Venda(ID),
 )
