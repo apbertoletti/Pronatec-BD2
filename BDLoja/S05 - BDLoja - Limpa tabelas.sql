@@ -3,7 +3,7 @@
 * CURSO: Técnico em Informática para Internet
 * PROFESSOR: André Bertoletti (apbertolet@unimep.br)
 * DISPCIPLINA: Banco de Dados II 
-* SCRIPT: Limpeza das tabelas
+* SCRIPT: Limpeza das tabelas (BDLoja)
 **************************************************************/
 
 --1) Exclui todos os registros da tabel a VendaProduto

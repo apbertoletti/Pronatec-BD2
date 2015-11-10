@@ -3,7 +3,7 @@
 * CURSO: Técnico em Informática para Internet
 * PROFESSOR: André Bertoletti (apbertolet@unimep.br)
 * DISPCIPLINA: Banco de Dados II 
-* SCRIPT: Criação do banco de dados e estrutura das tabelas 
+* SCRIPT: Criação do banco de dados e estrutura das tabelas (BDLoja)
 **************************************************************/
 
 --Criando o banco de dados
@@ -54,13 +54,13 @@ CREATE TABLE Cliente
 --Criando a tabela ClienteEmail
 CREATE TABLE ClienteEndereco
 (
-	ID INT,
-	IDCliente INT,
-	Logradouro VARCHAR(200),
-	Numero VARCHAR(10),
+	ID INT IDENTITY,
+	IDCliente INT NOT NULL,
+	Logradouro VARCHAR(200) NOT NULL,
+	Numero VARCHAR(10) NOT NULL,
 	Complemento VARCHAR(100),
-	Bairro VARCHAR(100),
-	CEP CHAR(8)
+	Bairro VARCHAR(100) NOT NULL,
+	CEP CHAR(8) NOT NULL
 	
 	CONSTRAINT PK_ClienteEndereco PRIMARY KEY(ID),
 	CONSTRAINT FK_ClienteEndereco_Cliente FOREIGN KEY(IDCliente) REFERENCES Cliente(ID)

@@ -3,7 +3,7 @@
 * CURSO: Técnico em Informática para Internet
 * PROFESSOR: André Bertoletti (apbertolet@unimep.br)
 * DISPCIPLINA: Banco de Dados II 
-* SCRIPT: Exercícios de fixação
+* SCRIPT: Exercícios de fixação (BDLoja)
 **************************************************************/
 
 

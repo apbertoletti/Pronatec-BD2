@@ -3,15 +3,15 @@
 * CURSO: Técnico em Informática para Internet
 * PROFESSOR: André Bertoletti (apbertolet@unimep.br)
 * DISPCIPLINA: Banco de Dados II 
-* SCRIPT: Exemplos dos comandos SQL
+* SCRIPT: Exemplos dos comandos SQL (BDLoja)
 **************************************************************/
 
 /***************************************************************************************
 * AULA 3: Seleção de registros (SELECT), Atualização de registro (UPDATE), Deleção de registros (DELETE)
 ***************************************************************************************/
 
--- 1) Seleciona todas as colunas de todas as lojas
-SELECT * FROM Loja
+-- 1) Seleciona todas as colunas de todos os Estabelecimentos
+SELECT * FROM Estabelecimento
 
 -- 2) Seleciona todas as colunas dos clientes femininos
 SELECT * FROM Cliente WHERE Sexo = 'F'
@@ -55,11 +55,11 @@ FROM
 WHERE 	
 	Valor > 100 AND IDCategoria = 4
 
--- 8) Limpa o telefone de todas as lojas 
-UPDATE Loja SET Telefone = ''
+-- 8) Limpa o telefone de todas as Estabelecimentos 
+UPDATE Estabelecimento SET Telefone = ''
 
--- 9) Altera o telefone da Loja do Centro para "3241-5587"
-UPDATE Loja SET Telefone = '3241-5587' WHERE CNPJ = '98754124541001'
+-- 9) Altera o telefone do Estabelecimento do Centro para "3241-5587"
+UPDATE Estabelecimento SET Telefone = '3241-5587' WHERE CNPJ = '98754124541001'
 
 -- 10) Aumenta o valor de todos os produtos em 10%
 UPDATE Produto SET Valor = Valor * 1.10
@@ -499,3 +499,63 @@ FROM
 	Produto
 	FULL JOIN Marca ON Produto.IDMarca = Marca.ID
 
+
+/******************************************************************************************************************
+* AULA 11: Transações de banco de dados
+*******************************************************************************************************************/
+
+BEGIN TRAN
+BEGIN TRY
+	DECLARE @Nome VARCHAR(100)
+	DECLARE @Email VARCHAR(200)
+	DECLARE @Sexo CHAR(1)
+	DECLARE @CPF CHAR(11)
+	DECLARE @Residencial VARCHAR(15)
+	DECLARE @Celular VARCHAR(15)
+	DECLARE @Logradouro VARCHAR(200)
+	DECLARE @Numero VARCHAR(10)
+	DECLARE @Complemento VARCHAR(100)
+	DECLARE @Bairro VARCHAR(100)
+	DECLARE @CEP CHAR(8)
+	
+	SET @Nome = 'Juvenal Santana 2'
+	SET @Email = 'juju2@teste.com.br'
+	SET @Sexo = 'M'
+	SET @CPF = '45477888772'
+	SET @Residencial = '19-3574.5412'
+	SET @Celular = '19-3574.5412'
+	SET @Logradouro = 'Av. Independencia'
+	SET @Numero = '2340'
+	SET @Complemento = ''
+	SET @Bairro = 'Centro'
+	SET @CEP = '13500240'
+
+	INSERT INTO Cliente (Nome, Email, Sexo, CPF) 
+	VALUES (@Nome, @Email, @Sexo, @CPF)
+
+	--Obtém o valor do último ID sequencial gerado pelo SQL Server
+	DECLARE @IdClienteGerado INT
+	SELECT @IdClienteGerado = @@IDENTITY
+	
+	IF (@Residencial = @Celular)
+	BEGIN
+		RAISERROR('Não é possivel cadastrar fones iguais para o mesmo cliente', 14, 1)
+	END
+	
+	INSERT INTO ClienteTelefone (IDCliente, Telefone)
+	VALUES(@IdClienteGerado, @Residencial)
+	
+	INSERT INTO ClienteTelefone (IDCliente, Telefone)
+	VALUES(@IdClienteGerado, @Celular)
+	
+	INSERT INTO ClienteEndereco (IDCliente, Logradouro, Numero, Complemento, Bairro, CEP)
+	VALUES(@IdClienteGerado, @Logradouro, @Numero, @Complemento, @Bairro, @CEP)
+	
+	COMMIT TRAN
+	
+	SELECT 'Cliente cadastrado como sucesso!'
+END TRY
+BEGIN CATCH
+	ROLLBACK TRAN
+	SELECT ERROR_MESSAGE() AS Retorno
+END CATCH

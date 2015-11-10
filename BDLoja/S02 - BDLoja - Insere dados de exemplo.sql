@@ -3,7 +3,7 @@
 * CURSO: Técnico em Informática para Internet
 * PROFESSOR: André Bertoletti (apbertolet@unimep.br)
 * DISPCIPLINA: Banco de Dados II 
-* SCRIPT: Inserção dos dados de exemplo
+* SCRIPT: Inserção dos dados de exemplo (BDLoja)
 **************************************************************/
 
 -- Selecionando o BDLoja
